@@ -1,0 +1,441 @@
+1. File created with name "CalDemo2"
+
+WEL API 
+CalculatorController
+
+******************************************************
+using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using System;
+
+namespace CalDemo2.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class CalculatorController : ControllerBase
+    {
+
+        [HttpGet]
+        [Route("api/math/add")]
+        [EnableCors("AllowOrigin")]
+        public double Add(double num1, double num2)
+        {
+            return num1 + num2;
+        }
+
+        [HttpGet]
+        [Route("api/math/subtract")]
+        [EnableCors("AllowOrigin")]
+        public double Subtract(double num1, double num2)
+        {
+            return num1 - num2;
+        }
+
+        [HttpGet]
+        [Route("api/math/multiply")]
+        [EnableCors("AllowOrigin")]
+        public double Multiply(double num1, double num2)
+        {
+            return num1 * num2;
+        }
+
+        [HttpGet]
+        [Route("api/math/divide")]
+        [EnableCors("AllowOrigin")]
+        public double Divide(double num1, double num2)
+        {
+            if (num2 == 0)
+            {
+                throw new DivideByZeroException("Division by zero is not allowed.");
+            }
+            return num1 / num2;
+        }
+
+        [HttpGet]
+        [Route("api/math/square-root")]
+        [EnableCors("AllowOrigin")]
+        public double SquareRoot(double num)
+        {
+            if (num < 0)
+            {
+                throw new ArgumentException("Square root of a negative number is not allowed.");
+            }
+            return Math.Sqrt(num);
+        }
+        [HttpGet]
+        [Route("api/math/sine")]
+        [EnableCors("AllowOrigin")]
+        public double Sine(double angleInDegrees)
+        {
+            double angleInRadians = angleInDegrees * (Math.PI / 180.0);
+            return Math.Sin(angleInRadians);
+        }
+
+        [HttpGet]
+        [Route("api/math/cosine")]
+        [EnableCors("AllowOrigin")]
+        public double Cosine(double angleInDegrees)
+        {
+            double angleInRadians = angleInDegrees * (Math.PI / 180.0);
+            return Math.Cos(angleInRadians);
+        }
+
+        [HttpGet]
+        [Route("api/math/tangent")]
+        [EnableCors("AllowOrigin")]
+        public double Tangent(double angleInDegrees)
+        {
+            double angleInRadians = angleInDegrees * (Math.PI / 180.0);
+            return Math.Tan(angleInRadians);
+        }
+        [HttpGet]
+        [Route("api/math/cotangent")]
+        [EnableCors("AllowOrigin")]
+        public double Cotangent(double angleInDegrees)
+        {
+            double angleInRadians = angleInDegrees * (Math.PI / 180.0);
+            return 1 / Math.Tan(angleInRadians);
+        }
+
+        [HttpGet]
+        [Route("api/math/cosecant")]
+        [EnableCors("AllowOrigin")]
+        public double Cosecant(double angleInDegrees)
+        {
+            double angleInRadians = angleInDegrees * (Math.PI / 180.0);
+            return 1 / Math.Sin(angleInRadians);
+        }
+
+        [HttpGet]
+        [Route("api/math/secant")]
+        [EnableCors("AllowOrigin")]
+        public double Secant(double angleInDegrees)
+        {
+            double angleInRadians = angleInDegrees * (Math.PI / 180.0);
+            return 1 / Math.Cos(angleInRadians);
+        }
+
+        [HttpGet]
+        [Route("api/math/sinh")]
+        [EnableCors("AllowOrigin")]
+        public double Sinh(double x)
+        {
+            return Math.Sinh(x);
+        }
+
+        [HttpGet]
+        [Route("api/math/cosh")]
+        [EnableCors("AllowOrigin")]
+        public double Cosh(double x)
+        {
+            return Math.Cosh(x);
+        }
+
+        [HttpGet]
+        [Route("api/math/tanh")]
+        [EnableCors("AllowOrigin")]
+        public double Tanh(double x)
+        {
+            return Math.Tanh(x);
+        }
+        [HttpGet]
+        [Route("api/math/percentage")]
+        [EnableCors("AllowOrigin")]
+        public double Percentage(double value, double percentage)
+        {
+            return (value * percentage) / 100.0;
+        }
+
+        [HttpGet]
+        [Route("api/math/square")]
+        [EnableCors("AllowOrigin")]
+        public double Square(double num)
+        {
+            return num * num;
+        }
+
+        [HttpGet]
+        [Route("api/math/cube")]
+        [EnableCors("AllowOrigin")]
+        public double Cube(double num)
+        {
+            return num * num * num;
+        }
+
+        [HttpGet]
+        [Route("api/math/cube-root")]
+        [EnableCors("AllowOrigin")]
+        public double CubeRoot(double num)
+        {
+            return Math.Pow(num, 1.0 / 3.0);
+        }
+
+        [HttpGet]
+        [Route("api/math/power")]
+        [EnableCors("AllowOrigin")]
+        public double Power(double baseValue, double exponent)
+        {
+            return Math.Pow(baseValue, exponent);
+        }
+
+        [HttpGet]
+        [Route("api/math/negative-power")]
+        [EnableCors("AllowOrigin")]
+        public double NegativePower(double baseValue, double exponent)
+        {
+            if (baseValue == 0 && exponent <= 0)
+            {
+                throw new ArgumentException("0 to the power of a non-positive number is undefined.");
+            }
+            return 1.0 / Math.Pow(baseValue, exponent);
+        }
+        [HttpGet]
+        [Route("api/math/ten-power")]
+        [EnableCors("AllowOrigin")]
+        public double TenPower(double x)
+        {
+            return Math.Pow(10, x);
+        }
+        [HttpGet]
+        [Route("api/math/log")]
+        [EnableCors("AllowOrigin")]
+        public double Log(double x)
+        {
+            if (x <= 0)
+            {
+                throw new ArgumentException("Logarithm of a non-positive number is undefined.");
+            }
+            return Math.Log10(x);
+        }
+
+        [HttpGet]
+        [Route("api/math/ln")]
+        [EnableCors("AllowOrigin")]
+        public double Ln(double x)
+        {
+            if (x <= 0)
+            {
+                throw new ArgumentException("Natural logarithm of a non-positive number is undefined.");
+            }
+            return Math.Log(x);
+        }
+
+        [HttpGet]
+        [Route("api/math/fact")]
+        [EnableCors("AllowOrigin")]
+        public float CalculateFactorial(float num)
+        {
+            if (num < 0)
+            {
+                // Factorial is not defined for negative numbers
+                throw new ArgumentException("Factorial is not defined for negative numbers.");
+            }
+
+            float factorial = 1;
+            for (int i = 1; i <= num; i++)
+            {
+                factorial *= i;
+            }
+
+            return factorial;
+        }
+
+        [HttpGet]
+        [Route("api/math/sip")]
+        [EnableCors("AllowOrigin")]
+        public float CalculateReturns(float principal, float durationInMonths, float annualInterestRate)
+        {
+            float monthlyInterestRate = annualInterestRate / 12 / 100;
+            float totalMonths = durationInMonths;
+            float futureValue = principal;
+
+            for (int i = 0; i < totalMonths; i++)
+            {
+                futureValue += futureValue * (float)monthlyInterestRate;
+            }
+
+            return futureValue;
+        }
+
+        [HttpGet]
+        [Route("api/math/lumpsum")]
+        public float CalculateLumpSum(float principal, float annualInterestRate, float durationMonths)
+        {
+            // Convert annual interest rate to monthly interest rate
+            double monthlyInterestRate = annualInterestRate / 12 / 100;
+
+            // Calculate future value with monthly compounding
+            float futureValue = principal * (float)Math.Pow(1 + monthlyInterestRate, durationMonths);
+
+            return futureValue;
+        }
+
+        [HttpGet]
+        [Route("api/math/emi")]
+        public double CalculateEmi(double principal, double annualInterestRate, int loanTenureMonths)
+        {
+            if (principal <= 0 || annualInterestRate <= 0 || loanTenureMonths <= 0)
+            {
+                return 0;
+            }
+
+            // Convert annual interest rate to monthly interest rate
+            double monthlyInterestRate = annualInterestRate / 12 / 100;
+
+            // Calculate EMI using the formula
+            double emi = (principal * monthlyInterestRate * Math.Pow(1 + monthlyInterestRate, loanTenureMonths)) / (Math.Pow(1 + monthlyInterestRate, loanTenureMonths) - 1);
+
+            return emi;
+        }
+
+
+    }
+}
+*************************************************
+
+startup.cs 
+
+//using Microsoft.AspNetCore.Builder;
+//using Microsoft.AspNetCore.Hosting;
+//using Microsoft.AspNetCore.HttpsPolicy;
+//using Microsoft.AspNetCore.Mvc;
+//using Microsoft.Extensions.Configuration;
+//using Microsoft.Extensions.DependencyInjection;
+//using Microsoft.Extensions.Hosting;
+//using Microsoft.Extensions.Logging;
+//using Microsoft.OpenApi.Models;
+//using System;
+//using System.Collections.Generic;
+//using System.Linq;
+//using System.Threading.Tasks;
+
+//namespace CalDemo2
+//{
+//    public class Startup
+//    {
+//        public Startup(IConfiguration configuration)
+//        {
+//            Configuration = configuration;
+//        }
+
+//        public IConfiguration Configuration { get; }
+
+//        // This method gets called by the runtime. Use this method to add services to the container.
+//        public void ConfigureServices(IServiceCollection services)
+//        {
+
+//            services.AddControllers();
+//            services.AddSwaggerGen(c =>
+//            {
+//                c.SwaggerDoc("v1", new OpenApiInfo { Title = "CalDemo2", Version = "v1" });
+//            });
+//        }
+
+
+
+
+//        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+//        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+//        {
+//            if (env.IsDevelopment())
+//            {
+//                app.UseDeveloperExceptionPage();
+//                app.UseSwagger();
+//                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "CalDemo2 v1"));
+//            }
+
+//            app.UseHttpsRedirection();
+
+//            app.UseRouting();
+
+//            app.UseAuthorization();
+
+//            app.UseEndpoints(endpoints =>
+//            {
+//                endpoints.MapControllers();
+//            });
+//        }
+//    }
+//}
+
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using Microsoft.OpenApi.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace CalDemo2
+{
+    public class Startup
+    {
+        public Startup(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
+
+        public IConfiguration Configuration { get; }
+
+        // This method gets called by the runtime. Use this method to add services to the container.
+        public void ConfigureServices(IServiceCollection services)
+        {
+
+            services.AddControllers();
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "CalDemo1", Version = "v1" });
+            });
+            // Added portion start....................
+            services.AddCors(c =>
+            {
+                c.AddPolicy("AllowOrigin",
+                    options =>
+                        options.AllowAnyOrigin()
+                        .AllowAnyHeader()
+                         .AllowAnyMethod());
+            });
+            // Added portion end....................
+        }
+
+        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        {
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+                app.UseSwagger();
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "CalDemo1 v1"));
+            }
+            app.UseRouting();
+            // Added portion start....................
+            app.UseCors(x => x
+.AllowAnyOrigin()
+.AllowAnyMethod()
+.AllowAnyHeader());
+
+            // Added portion end....................
+            app.UseHttpsRedirection();
+
+
+
+            app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
+        }
+    }
+}
+*****************************************************
+
+Angular
+
