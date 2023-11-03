@@ -439,3 +439,1199 @@ namespace CalDemo2
 
 Angular
 
+<!--Folder name Calculator
+   ng new scientific-calculator
+ng generate component calculator,home,sip,team , emi
+ng generate service add-calculator -->
+
+********************************************************
+app.module.ts
+
+
+
+import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
+
+
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { CalculatorComponent } from './calculator/calculator.component';
+import { AddCalculatorService } from './add-calculator.service';
+import { HttpClientModule } from '@angular/common/http';
+import { HomeComponent } from './home/home.component';
+import { SipComponent } from './sip/sip.component';
+import { TeamComponent } from './team/team.component';
+import { EmiComponent } from './emi/emi.component';
+
+
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    CalculatorComponent,
+    HomeComponent,
+    SipComponent,
+    TeamComponent,
+    EmiComponent,
+    
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule
+    
+  ],
+  providers: [AddCalculatorService],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+
+****************************************************************
+
+app.component.ts
+
+
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+  title = 'scientific-calculator';
+}
+
+**************************************************************
+
+app.cpmponent.html
+
+
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+  title = 'scientific-calculator';
+}
+
+***************************************************************
+
+app.component.css
+
+header {
+    background-color: #f78e51;
+    color: #fff;
+    padding: 10px 5px; 
+  }
+
+nav {
+    text-align: center;
+  }
+  
+nav a {
+    text-decoration: none;
+    
+    color: #fff8f8; /* Link text color */
+    margin: 0 30px; /* Spacing between links */
+    font-weight: bold; /* Bold text */
+    font-size: 20px; /* Font size */
+  }
+
+nav a:hover {
+    color: #000000; /* Change color on hover */
+  }
+  h1 a{
+    text-decoration: none;
+    color: #f78e51;
+  }
+  
+
+
+/* .footer {
+    background-color: #333;
+    color: #fff;
+    padding: 1px 0px ;
+    
+  }
+  
+  .footer p {
+    font-size: 14px;
+    text-align: center;
+  } */
+
+***************************************************
+app-routing.module.ts
+
+
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+
+
+import { HomeComponent } from './home/home.component';
+import { CalculatorComponent } from './calculator/calculator.component';
+import { SipComponent } from './sip/sip.component';
+import { TeamComponent } from './team/team.component';
+import { EmiComponent } from './emi/emi.component';
+
+const routes: Routes = [
+  { path: 'home', component: HomeComponent },
+  { path: 'calculator', component: CalculatorComponent },
+  { path: 'sip', component: SipComponent },
+  { path: 'team', component: TeamComponent },
+  { path: 'emi', component:EmiComponent},
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
+];
+
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
+export class AppRoutingModule { }
+
+******************************************************************
+add-calculator.service.ts
+
+
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
+
+
+
+@Injectable({
+  providedIn: 'root'
+})
+export class AddCalculatorService {
+  private apiURL= 'https://localhost:44336/api/Calculator/api/math';
+  constructor(private http:HttpClient) { }
+
+ add(a: number, b: number): Observable<number> {
+  return this.http.get<number>(`${this.apiURL}/add?num1=${a}&num2=${b}`);
+}
+
+mul(a: number, b: number): Observable<number> {
+  return this.http.get<number>(`${this.apiURL}/multiply?num1=${a}&num2=${b}`);
+}
+
+div(a: number, b: number): Observable<number> {
+  return this.http.get<number>(`${this.apiURL}/divide?num1=${a}&num2=${b}`);
+}
+
+sub(a: number, b: number): Observable<number> {
+  return this.http.get<number>(`${this.apiURL}/subtract?num1=${a}&num2=${b}`);
+}
+
+sqr(a: number): Observable<number> {
+  return this.http.get<number>(`${this.apiURL}/square?num=${a}`);
+}
+cube(a: number): Observable<number> {
+  return this.http.get<number>(`${this.apiURL}/cube?num=${a}`);
+}
+
+sqrt(a: number): Observable<number> {
+  return this.http.get<number>(`${this.apiURL}/square-root?num=${a}`);
+}
+
+
+sin(b: number): Observable<number> {
+  return this.http.get<number>(`${this.apiURL}/sine?angleInDegrees=${b}`);
+}
+cos(b: number): Observable<number> {
+  return this.http.get<number>(`${this.apiURL}/cosine?angleInDegrees=${b}`);
+}
+tan(b: number): Observable<number> {
+  return this.http.get<number>(`${this.apiURL}/tangent?angleInDegrees=${b}`);
+}
+log(b: number): Observable<number> {
+  return this.http.get<number>(`${this.apiURL}/log?x=${b}`);
+}
+
+ln(b: number): Observable<number> {
+  return this.http.get<number>(`${this.apiURL}/ln?x=${b}`);
+}
+
+percentage(a: number, b: number): Observable<number> {
+  return this.http.get<number>(`${this.apiURL}/percentage?value=${a}&percentage=${b}`);
+}
+
+pow(a: number, b: number): Observable<number> {
+  return this.http.get<number>(`${this.apiURL}/power?baseValue=${a}&exponent=${b}`);
+}
+
+
+fact(a: number): Observable<number> {
+  return this.http.get<number>(`${this.apiURL}/fact?num=${a}`);
+}
+
+sip(a: number, b: number,c:number): Observable<number> {
+  return this.http.get<number>(`${this.apiURL}/sip?principal=${a}&durationInMonths=${b}&annualInterestRate=${c}`);
+}
+
+
+lumpsum(a: number, b: number , c: number): Observable<number> {
+  return this.http.get<number>(`${this.apiURL}/lumpsum?principal=${a}&annualInterestRate=${b}&durationMonths=${c}`);
+}
+
+emi(a: number, b: number , c: number): Observable<number> {
+  return this.http.get<number>(`${this.apiURL}/emi?principal=${a}&annualInterestRate=${b}&loanTenureMonths=${c}`);
+}
+}
+
+*********************************************************************
+
+calculator.component.ts
+
+
+import { Component,OnInit } from '@angular/core';
+import { AddCalculatorService } from '../add-calculator.service';
+
+
+@Component({
+  selector: 'app-calculator',
+  templateUrl: './calculator.component.html',
+  styleUrls: ['./calculator.component.css']
+})
+export class CalculatorComponent {
+  result = '';
+  input1 ='';
+  input2='';
+  op='';
+  memory ='';
+
+
+  public a:number=0;
+  public b:number=0;
+
+  constructor(private addCal: AddCalculatorService){};
+
+  public add:number=0;
+
+  appendToDisplay(value: string) {
+    this.result += value;
+  }
+
+  addToMemory() {
+    const resultNumber = parseFloat(this.result);
+    if (!isNaN(resultNumber)) {
+      this.memory='';
+      this.memory += resultNumber;
+
+    }
+  }
+
+  recallMemory() {
+    this.result = this.memory.toString();
+  }
+  
+  
+
+  clearResult() {
+    this.result = '';
+  }
+  clearBack() {
+    if (this.result.length > 0) {
+      this.result = this.result.slice(0, -1);
+    }
+  }
+  
+
+  calculateResult() {
+    const matches = this.result.match(/([a-zA-Z]+)([0-9]+)/);
+
+    if (matches) {
+      this.op = matches[1]; 
+      const num = matches[2];
+      this.b = parseFloat(num);
+
+
+    } else {
+      const part=this.result.split(/([+\-*/^%!])/)
+      this.input1=part[0];
+      this.a=parseFloat(this.input1);
+
+      this.op=part[1];
+      if(part.length==3){
+        this.input2=part[2];
+        this.b=parseFloat(this.input2);
+
+      }
+    }
+
+    switch (this.op) {
+      case '+':
+        this.addCal.add(this.a, this.b).subscribe((data) => {
+          this.result = data.toString();
+        });
+        break;
+      case '-':
+        this.addCal.sub(this.a, this.b).subscribe((data) => {
+          this.result = data.toString();
+        });
+
+        break;
+      case '*':
+        this.addCal.mul(this.a, this.b).subscribe((data) => {
+          this.result = data.toString();
+        });
+
+        break;
+
+      case '/':
+        if(this.b!==0){
+          this.addCal.div(this.a, this.b).subscribe((data) => {
+            this.result = data.toString();
+          });
+        }
+        else{
+          this.result='Invalid Operation';
+        }
+
+        break;
+      case '^': 
+        if(this.b==2){
+          this.addCal.sqr(this.a).subscribe((data) => {
+            this.result = data.toString();
+          });
+
+        }
+        else if(this.b==3){
+          this.addCal.cube(this.a).subscribe((data) => {
+            this.result = data.toString();
+          });
+
+        }
+        else if(this.b==0.5){
+          this.addCal.sqrt(this.a).subscribe((data) => {
+            this.result = data.toString();
+          });
+
+        }
+        else if(this.b==0){
+          this.result='1';
+        }
+
+        else{
+          this.addCal.pow(this.a,this.b).subscribe((data) => {
+            this.result = data.toString();
+          });
+
+        }
+
+        break;
+
+      case 'sin': 
+        this.addCal.sin(this.b).subscribe((data) => {
+          this.result = data.toString();
+        });
+
+        break;
+
+      case 'cos':
+      this.addCal.cos(this.b).subscribe((data) => {
+        this.result = data.toString();
+      });
+
+      break;
+    case 'tan':
+      this.addCal.tan(this.b).subscribe((data) => {
+        this.result = data.toString();
+      });
+
+      break;
+
+    case 'log':
+      this.addCal.log(this.b).subscribe((data) => {
+        this.result = data.toString();
+      });
+
+      break;
+  
+
+    case 'ln':
+      this.addCal.ln(this.b).subscribe((data) => {
+        this.result = data.toString();
+      });
+
+      break;
+
+    case '%':
+      this.addCal.percentage(this.a, this.b).subscribe((data) => {
+        this.result = data.toString();
+      });
+
+      break;
+    case '!':
+      this.addCal.fact(this.a).subscribe((data) => {
+        this.result = data.toString();
+      });
+
+      break;
+
+      default:
+        this.result = 'Invalid operation';
+    }
+    // if (this.result.length > 25) { // You can adjust the length limit as needed
+    //   this.result = 'Overflow Error';
+
+    // }
+  }
+    
+
+  }
+
+***********************************************************
+calculator.component.html
+
+
+
+<div>
+    
+    <h2 style="color: rgb(0, 0, 0); font-size: 40px;">Scientific Calculator</h2>
+</div>
+
+<body>
+<div class="cal">
+    <div class="calculator">
+      <input type="text" id="screen" value="{{result}}">
+      <div class="calc-buttons">
+    
+          <div class="functions-one">
+              <button class="button triggers" (click)="clearResult()">C</button>
+              <button class="button basic-stuff">(</button>
+              <button class="button basic-stuff">)</button>
+              <button  (click)="appendToDisplay('7')" class="button numbers">7</button>
+              <button  (click)="appendToDisplay('8')"class="button numbers">8</button>
+              <button  (click)="appendToDisplay('9')"class="button numbers">9</button>
+              <button  (click)="appendToDisplay('4')"class="button numbers">4</button>
+              <button  (click)="appendToDisplay('5')"class="button numbers">5</button>
+              <button  (click)="appendToDisplay('6')"class="button numbers">6</button>
+              <button  (click)="appendToDisplay('1')"class="button numbers">1</button>
+              <button  (click)="appendToDisplay('2')"class="button numbers">2</button>
+              <button  (click)="appendToDisplay('3')" class="button numbers">3</button>
+              <button (click)="appendToDisplay('00')" class="button numbers">00</button>
+              <button  (click)="appendToDisplay('0')"class="button numbers">0</button>
+              <button  (click)="appendToDisplay('.')"class="button basic-stuff">.</button>
+          </div>
+    
+          <div class="functions-two">
+              <button class="button triggers" (click)="clearBack()"><=</button>
+              <button  (click)="appendToDisplay('%')" class="button complex-stuff">%</button>
+              <button  (click)="appendToDisplay('!')"class="button complex-stuff">x !</button>
+              <button  (click)="appendToDisplay('^')"class="button complex-stuff">x^</button>
+              <button  (click)="appendToDisplay('*')" class="button basic-stuff">*</button>
+              <button  (click)="appendToDisplay('/')"class="button basic-stuff">/</button>
+              <button  (click)="appendToDisplay('ln')"class="button complex-stuff">ln</button>
+              <button  (click)="appendToDisplay('2.718')"class="button complex-stuff">e</button>
+              <button  (click)="appendToDisplay('+')"class="button basic-stuff">+</button>
+              <button  (click)="appendToDisplay('^2')"class="button complex-stuff">x ²</button>
+              <button  (click)="appendToDisplay('log')"class="button complex-stuff">log</button>
+              <button  (click)="appendToDisplay('cos')"class="button complex-stuff">cos</button>
+              <button  (click)="appendToDisplay('-')"class="button basic-stuff">-</button>
+              <button  (click)="appendToDisplay('^0.5')"class="button complex-stuff">√</button>
+              <button (click)="appendToDisplay('sin')" class="button complex-stuff">sin</button>
+              <button (click)="appendToDisplay('tan')" class="button complex-stuff">tan</button>
+              <button (click)="calculateResult()"class="button triggers">=</button>
+              <button (click)="addToMemory()"class="button complex-stuff">M+</button>
+              <button (click)="recallMemory() "class="button complex-stuff">MR</button>
+              <button (click)="appendToDisplay('3.1415')"class="button complex-stuff">π</button>
+    
+          </div>
+      </div>
+    </div> 
+</div>
+</body>
+
+***********************************************************************
+calculator.component.css
+
+
+
+
+ 
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        
+    }
+    
+    .cal {
+        background-color: rgb(255, 144, 69); 
+        position: fixed;
+        top: 150px;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+    }
+    
+    .calculator {
+        max-width: 560px;
+        height: auto;
+        bottom:70px;
+        background-color: rgb(249, 216, 156);
+        padding: 30px;
+        border-radius: 10px;
+        margin: 10% auto;
+        
+        position: relative;
+        z-index: 1;
+        box-shadow: 15px 15px 5px lightblue;
+    }
+    
+    input[type=text] {
+        width: 450px;
+        height: 60px;
+        border-radius: 10px;
+        border: 0px;
+        background-color: #807a7a;
+        color: #fffefe;
+        padding: 0 5px 0 5px;
+        margin: 10px 50px 50px 50px;
+        font-size: xx-large;
+        text-align: right;
+    }
+    
+    .calc-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+    
+    .button {
+        margin: 3px;
+        width: 60px;
+        border: none;
+        height: 45px;
+        border-radius: 10px;
+        color: #000000;
+        cursor: pointer;
+        font-size: x-large;
+    }
+    
+    button:hover {
+        background-color: hsla(112, 91%, 32%, 0.3);
+        transition: .2s;
+    }
+    
+    .functions-one {
+        width: 210px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        
+    }
+    
+    .functions-two {
+        width: 280px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        
+    }
+    
+    .triggers {
+        background-color: #fc6b5b;
+    }
+    
+    .numbers {
+        background-color: #4e4a51;
+        color: white;
+    }
+    
+    .basic-stuff {
+        background-color: #80d4ff;
+    }
+    
+    .complex-stuff {
+        background-color: #24a4c1;
+        color: white;
+    }
+    
+    h2 {
+        text-align: center;
+       
+        font-size: 20px;
+    }
+
+
+***********************************************************************
+
+emi.component.ts
+
+import { Component } from '@angular/core';
+import { AddCalculatorService } from '../add-calculator.service';
+@Component({
+  selector: 'app-emi',
+  templateUrl: './emi.component.html',
+  styleUrls: ['./emi.component.css']
+})
+export class EmiComponent {
+  principal: number=0;
+  annualInterestRate: number=0;
+  loanTenureMonths: number=0;
+  emiResult: number=0;
+  constructor(private addCal: AddCalculatorService){}
+  
+  calculateEmi() {
+  
+
+    this.addCal.emi(this.principal, this.annualInterestRate,this.loanTenureMonths).subscribe((data) => {
+     this.emiResult = Number(data.toFixed(2));
+   });
+ }
+}
+
+************************************************************
+
+emi.component.html
+
+
+   <h2>EMI Calculator</h2>
+   <table class="emi-calculator-table">
+    
+        
+   
+    <tr>
+      <td>
+        <label for="principal">Principal Amount:</label>
+      </td>
+      <td>
+        <input type="number" id="principal" [(ngModel)]="principal" />
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label for="annualInterestRate">Annual Interest Rate (%):</label>
+      </td>
+      <td>
+        <input type="number" id="annualInterestRate" [(ngModel)]="annualInterestRate" />
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label for="loanTenureMonths">Loan Tenure (Months):</label>
+      </td>
+      <td>
+        <input type="number" id="loanTenureMonths" [(ngModel)]="loanTenureMonths" />
+      </td>
+    </tr>
+    <tr>
+        <td colspan="2" class="result-cell">
+          <label *ngIf="emiResult">EMI: {{ emiResult }}</label>
+        </td>
+      </tr>
+    <tr>
+      <td colspan="2" class="calculate-button-cell">
+        <button (click)="calculateEmi()">Calculate EMI</button>
+      </td>
+    </tr>
+ 
+  </table>
+
+****************************************************************
+emi.component.css
+
+
+   .emi-calculator-table {
+    border-collapse: collapse;
+    width: 60%;
+  
+    margin: 10px auto;
+    background-color: #f78e51;
+    border: 2px solid #fd7e47;
+    border-radius: 2px;
+    box-shadow: 15px 15px 5px lightblue;
+    padding:auto;
+  }
+  
+  .emi-calculator-table td {
+    padding: 10px;
+    border: 1px solid #fd7e47;
+  }
+  
+  .emi-calculator-table h2 {
+    text-align: center;
+    font-size: 30px;
+  }
+  
+  .emi-calculator-table label {
+    font-weight: bold;
+    display: block;
+    font-size: x-large;
+  }
+  
+  .emi-calculator-table input[type="number"] {
+    width: 90%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 1em;
+    margin-top: 5px;
+    font-size: large;
+  }
+  
+  .calculate-button-cell {
+    text-align: center;
+    font-size: 20px;
+  }
+  
+  .calculate-button-cell button {
+    background-color: #007BFF;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 20px;
+  }
+  
+  .result-cell {
+    text-align: center;
+    padding: 10px;
+  }
+  
+  .result-cell p {
+    font-weight: bold;
+  }
+
+  h2{
+    font-size: xx-large;
+    text-align: center;
+    color: black;
+  }
+
+********************************************************
+home.component.ts
+
+
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-home',
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.css']
+})
+export class HomeComponent {
+
+}
+
+***************************************************
+home.component.html
+
+
+
+
+
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Home Page</title>
+      <link rel="stylesheet" type="text/css" href="home.component.css">
+  </head>
+  <body>
+      <div class="calculator scientific">
+          <div class="description">
+              <h2 >Scientific Calculator</h2>
+              <ul >
+                <li>Perform complex mathematical calculations with ease</li>
+                <li>Supports advanced functions like trigonometry, logarithms, and more</li>
+                <li>Ideal for students, engineers, and professionals</li>
+                <li>Solve algebraic equations and scientific problems</li>
+                <li>Includes a user-friendly interface for efficient usage</li>
+             
+                
+                
+            </ul>
+          </div>
+          <div class="image">
+            <a href="/calculator"><img src="https://media.istockphoto.com/id/1353868658/vector/calculator-app-concept.jpg?s=612x612&w=0&k=20&c=RKY-HN3PHBMfG34rhSBSmP-JXF3hVVRr7gWd3LICOdw=" alt="Scientific Calculator" style="height: 300px;">
+            </a>
+          </div>
+      </div>
+  
+      <div class="calculator sip">
+          <div class="description">
+              <h2>Investment Calculator</h2>
+              <ul>
+                <li>Plan your investments effectively</li>
+            <li>Estimate future returns on SIP investments</li>
+            <li>Secure your financial future with SIP</li>
+            <li>Calculate potential wealth accumulation over time</li>
+            <li>Customize your investment horizon and contribution amount</li>
+            <li>Get insights into the power of compounding</li>
+           
+            </ul>
+          </div>
+          <div class="image">
+            <a href="/sip"><img src="https://cdn-scripbox-wordpress.scripbox.com/wp-content/uploads/2021/04/types-of-sip-vector.png" alt="SIP Calculator"style="height: 200px;">
+            </a>
+          </div>
+      </div>
+      <div class="calculator emi">
+        <div class="description">
+            <h2>EMI Calculator</h2>
+            <ul>
+                <li>Calculate Equated Monthly Installments (EMI) for loans</li>
+                <li>Estimate monthly payment amounts for different loan scenarios</li>
+                <li>Plan your budget for loan repayments</li>
+                <li>Get insights into interest and principal components of your EMIs</li>
+                <li>Ideal for personal and financial planning</li>
+            </ul>
+        </div>
+        <div class="image">
+            <a href="/emi"><img src="https://assets.materialup.com/uploads/05013951-49a1-4ecf-b29a-7d6ea9c6bf83/preview.jpg" alt="EMI Calculator" style="height: 350px;"></a>
+        </div>
+    </div>
+  </body>
+  
+  
+
+ **************************************************
+home.component.css
+
+
+ 
+ body {
+    background-color: rgb(238, 138, 66);
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.calculator {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 80%;
+    background-color: white;
+    margin: 20px;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.calculator.sip {
+    background-color: white;
+}
+
+.calculator .description {
+    flex: 1;
+    padding: 20px;
+    text-align: left;
+    
+}
+
+.calculator .image {
+    flex: 1;
+    text-align: center;
+}
+
+.calculator h2 {
+    color: deeporange;
+}
+
+.calculator.sip h2 {
+    color: rgb(17, 17, 17);
+}
+
+.calculator p {
+    color: black;
+}
+
+.calculator img {
+    max-width: 100%;
+}
+
+************************************************************
+sip.components.ts
+
+
+import { Component } from '@angular/core';
+import { Observable } from 'rxjs';
+ 
+import { AddCalculatorService } from '../add-calculator.service';
+import { FormsModule } from '@angular/forms';
+
+@Component({
+  selector: 'app-sip',
+  templateUrl: './sip.component.html',
+  styleUrls: ['./sip.component.css']
+})
+export class SipComponent {
+
+  result = '';
+  principalAmount = '';
+  timeInMonths = '';
+  annualInterestRate = '';
+  a=0;
+  b=0;
+  c=0;
+  pa='';
+  month='';
+  air='';
+  result1='';
+  d=0;
+  e=0;
+  f=0;
+
+
+  constructor(private addCal: AddCalculatorService) {}
+
+  calculateSip() {
+     this.a = parseFloat(this.principalAmount);
+     this.b = parseFloat(this.timeInMonths);
+     this.c = parseFloat(this.annualInterestRate);
+
+     this.addCal.sip(this.a, this.b,this.c).subscribe((data) => {
+      this.result = data.toString();
+    });
+  }
+  calculateLumpsum() {
+    this.d = parseFloat(this.pa);
+    this.e = parseFloat(this.month);
+    this.f = parseFloat(this.air);
+    console.log(this.d,this.e,this.f);
+    this.addCal.lumpsum(this.d, this.f,this.e).subscribe((data) => {
+     this.result1 = data.toString();
+     console.log(this.result1);
+   });
+ }
+}
+
+****************************************************
+sip.component.html
+
+<h1 style="color: black; text-align: center;">Investment Calculator</h1>
+<div class="calculator" id="SIP">
+
+<br>
+  <h2 style="color: white; text-align: center;">Sip Calculator</h2>
+  <table>
+    <tr>
+      <td><label for="principalAmount" style="color: white; font-size: 20px">Principal Amount:</label></td>
+      <td><input type="text" id="principalAmount" [(ngModel)]="principalAmount" style="font-size: large;"></td>
+    </tr>
+    <tr>
+      <td><label for="timeInMonths" style="color: white; font-size: 20px">Time (in months):</label></td>
+      <td><input type="text" id="timeInMonths" [(ngModel)]="timeInMonths" style="font-size: large;"></td>
+    </tr>
+    <tr>
+      <td><label for="annualInterestRate" style="color: white; font-size: 20px">Annual Interest Rate (%):</label></td>
+      <td><input type="text" id="annualInterestRate" [(ngModel)]="annualInterestRate" style="font-size: large;"></td>
+    </tr>
+    <tr>
+      <td><h2 style="color: white; font-size: 20px">SIP Amount after Investment:</h2></td>
+      <td><input type="text" value="{{result}}" style="font-size: large;"></td>
+    </tr>
+  </table>
+ <div style="text-align: center;">
+  <button (click)="calculateSip()" style="text-align: center; color: white; cursor: pointer;font-size: 30px; font-family: 'Times New Roman', Times, serif; border-radius: 10px;border-color: white; background-color: rgb(55, 131, 172);">Calculate</button>
+ </div>
+</div>
+
+<div class="calculator" id="LUMPSUM">
+  <h2 style="color: white; text-align: center;">Lumpsum Calculator</h2>
+  <table>
+    <tr>
+      <td><label for="pa" style="color: white; font-size: 20px">Principal Amount:</label></td>
+      <td><input type="text" id="pa" [(ngModel)]="pa" style="font-size: large;"></td>
+    </tr>
+    <tr>
+      <td><label for="month" style="color: white; font-size: 20px">Time (in months):</label></td>
+      <td><input type="text" id="month" [(ngModel)]="month" style="font-size: large;"></td>
+    </tr>
+    <tr>
+      <td><label for="air" style="color: white; font-size: 20px">Annual Interest Rate (%):</label></td>
+      <td><input type="text" id="air" [(ngModel)]="air" style="font-size: large;"></td>
+    </tr>
+    <tr>
+      <td><h2 style="color: white; font-size: 20px">Lumpsum Amount after Investment:</h2></td>
+      <td><input type="text" value="{{result1}}" style="font-size: large;"></td>
+    </tr>
+  </table>
+ <div style="text-align: center;">
+  <button (click)="calculateLumpsum()" style="text-align: center; color: white; cursor: pointer;font-size: 30px; font-family: 'Times New Roman', Times, serif; border-radius: 10px;border-color: white; background-color: rgb(55, 131, 172);">Calculate</button>
+ </div>
+</div>
+
+
+**************************************************
+sip.component.css
+
+
+
+
+
+.calculator {
+  text-align: center;
+    
+    margin: 0 auto; 
+    padding: 20px;
+    background-color:#f78e51;
+    border: 2px solid #070707;
+    border-radius: 5px;
+    margin-bottom: 50px;
+    box-shadow: 15px 15px 5px lightblue;
+    
+    width: 60%; 
+     
+  }
+
+  table {
+
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10px 0;
+  }
+
+  table td {
+    padding: 10px;
+    border: 2px solid #f78e51;
+    text-align: left;
+
+  }
+
+  table td label {
+    display: block;
+    font-weight: bold;
+  }
+
+  table td input[type="text"] {
+    width: 97%;
+    padding: 8px;
+    border: 1px solid #f78e51;
+    border-radius: 3px;
+  }
+
+  table td h2 {
+    margin: 10px 0;
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  table td input[type="text"][value] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #f78e51;
+    border-radius: 3px;
+  }
+
+  table td button {
+    padding: 10px 20px;
+    background-color: #ff7b00;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+
+  table td button:hover {
+    background-color: #f17b06;
+  }
+
+
+
+
+
+
+*****************************************************
+team.component.ts
+
+
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-team',
+  templateUrl: './team.component.html',
+  styleUrls: ['./team.component.css']
+})
+export class TeamComponent {
+
+  teamMembers = [
+    
+    { name: 'Dipankar', quote: 'The only limit to our realization of tomorrow will be our doubts of today.' },
+    { name: 'Poulami', quote: 'Success is not final, failure is not fatal: It is the courage to continue that counts.' },
+    { name: 'Shailendra', quote: 'The key to success. If you love what you are doing, you will be successful.' },
+    { name: 'Aakangsha', quote: 'The only limit to our realization of tomorrow will be our doubts of today.' },
+  ];
+
+}
+****************************************************
+team.component.html
+
+<div class="team">
+    <h2>Our Team</h2>
+      <div *ngFor="let member of teamMembers">
+        <div>
+            <h3>{{ member.name }}</h3>
+            <p>{{ member.quote }}</p>
+        </div>
+      </div>
+  </div>
+
+
+*****************************************************
+team.component.css
+.team {
+    text-align: center;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+  }
+  
+  .team h2 {
+    font-size: 24px;
+    color: #000000;
+  }
+  
+  .team div {
+    display: inline-block;
+    margin: 20px;
+    padding: 15px;
+    background-color: #ffa65e;
+    border: 1px solid#f9af72;
+    border-radius: 5px;
+    /* width: 300px; */
+    box-shadow: 20px 20px 15px rgba(0, 0, 0, 0.1);
+    text-align: left;
+    
+  }
+  
+  .team h3 {
+    font-size: 30px;
+    margin: 0;
+    color: #070707;
+  }
+
+  .team h2 {
+    font-size: 30px;
+    margin: 0;
+    color: #ff932e;
+  }
+  
+  .team p {
+    font-size: 15px;
+    color: #000000;
+  }
+  
+  .team div:hover {
+    background-color: #f0f0f0;
+  }
+  
+******************************************************
+
+
+
+
+
